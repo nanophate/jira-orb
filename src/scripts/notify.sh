@@ -90,6 +90,9 @@ getIssueKeys() {
   local COMMIT_KEYS
   COMMIT_KEYS="$(parseKeys "$COMMIT_MESSAGE")"
   BODY_KEYS="$(parseKeys "$COMMIT_BODY")"
+  log "GETTING PARAMS SPECIFIED KEYS"
+  local PARA_KEYS
+  PARA_KEYS="$(parseKeys "$JIRA_VAL_PARAM_KEYS")"
   log "GETTING TAG KEYS"
   local TAG_KEYS
   TAG_KEYS="$(getTagKeys)"
@@ -98,6 +101,7 @@ getIssueKeys() {
   [[ -n "$BRANCH_KEYS" ]] && KEY_ARRAY+=("$BRANCH_KEYS")
   [[ -n "$COMMIT_KEYS" ]] && KEY_ARRAY+=("$COMMIT_KEYS")
   [[ -n "$BODY_KEYS" ]] && KEY_ARRAY+=("$BODY_KEYS")
+  [[ -n "$PARA_KEYS" ]] && KEY_ARRAY+=("$PARA_KEYS")
   [[ -n "$TAG_KEYS" ]] && KEY_ARRAY+=("$TAG_KEYS")
 
   # Remove duplicates
@@ -234,6 +238,7 @@ JIRA_VAL_JIRA_OIDC_TOKEN=$(circleci env subst "${JIRA_VAL_JIRA_OIDC_TOKEN}")
 JIRA_VAL_JIRA_WEBHOOK_URL=$(circleci env subst "${JIRA_VAL_JIRA_WEBHOOK_URL}")
 # Add the log parameter to the URL
 JIRA_VAL_JIRA_WEBHOOK_URL="${JIRA_VAL_JIRA_WEBHOOK_URL}?verbosity=${JIRA_LOG_LEVEL}"
+JIRA_VAL_PARAM_KEYS=$(circleci env subst "${JIRA_VAL_PARAM_KEYS}")
 # JIRA_VAL_PIPELINE_ID - pipeline id
 # JIRA_VAL_PIPELINE_NUMBER - pipeline number
 TIME_EPOCH=$(date +%s)
@@ -263,6 +268,7 @@ export JIRA_VAL_ENVIRONMENT_TYPE
 export JIRA_VAL_STATE_PATH
 export JIRA_VAL_SERVICE_ID
 export JIRA_VAL_ISSUE_REGEXP
+export JIRA_VAL_PARAM_KEYS
 export JIRA_VAL_PIPELINE_ID
 export JIRA_VAL_PIPELINE_NUMBER
 export TIME_EPOCH

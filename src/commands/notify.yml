@@ -21,6 +21,10 @@ parameters:
     description: Specify the JSD service ID for the project this notification targets. This will be sent with deployment notifications.
     type: string
     default: "${JIRA_SERVICE_ID}"
+  issue_keys:
+      default: ""
+      description: Specify key for jira using parametrs
+      type: string
   issue_regexp:
     description: Override the default project key regexp if your project keys follow a different format. Your key must be in the [1] capture group.
     default: ([A-Z]{2,30}-[0-9]+)
@@ -67,6 +71,7 @@ steps:
         JIRA_VAL_ENVIRONMENT_TYPE: <<parameters.environment_type>>
         JIRA_VAL_SERVICE_ID: <<parameters.service_id>>
         JIRA_VAL_ISSUE_REGEXP: <<parameters.issue_regexp>>
+        JIRA_VAL_PARAM_KEYS: <<parameters.issue_keys>>
         JIRA_VAL_PIPELINE_ID: <<parameters.pipeline_id>>
         JIRA_VAL_PIPELINE_NUMBER: <<parameters.pipeline_number>>
         JIRA_VAL_JIRA_WEBHOOK_URL: <<parameters.webhook_url>>
